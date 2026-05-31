@@ -66,7 +66,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#050508] text-[#E2E8F0] font-sans antialiased selection:bg-violet-600 selection:text-white" id="zhifu-app-root">
+    <div className="flex h-screen w-screen overflow-hidden bg-bg-base text-[#e8eaf0] font-sans antialiased selection:bg-violet-600 selection:text-white" id="zhifu-app-root">
       {/* 1. Left Sidebar Navigation Column */}
       <Sidebar
         activeTab={activeTab}

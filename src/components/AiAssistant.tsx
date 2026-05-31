@@ -17,7 +17,7 @@ export default function AiAssistant({ userProfile, onNavigateToTab }: AiAssistan
     {
       id: 'init-1',
       sender: 'assistant',
-      text: '您好！我是您的 智服AI 政策与合规助手。有什么我可以帮助您的？无论是关于大湾区高新政策、APP个人数据合规自查，还是本平台的资助条件，我都在线为您排忧解惑。',
+      text: '您好！我是您的 智能助手。有什么我可以帮助您的？无论是关于大湾区高新政策、APP个人数据合规自查，还是本平台的资助条件，我都在线为您排忧解惑。',
       timestamp: new Date()
     }
   ]);
@@ -27,9 +27,9 @@ export default function AiAssistant({ userProfile, onNavigateToTab }: AiAssistan
 
   const quickPrompts = [
     { text: '如何提升企业合规得分？', category: 'compliance' },
-    { text: '有什么针对卫星物联的补贴？', category: 'policy' },
-    { text: '平台目前能匹配供需链吗？', category: 'matching' },
-    { text: '想预约 Dr. Lin 的专家咨询。', category: 'experts' },
+    { text: '平台目前能配置供需链路吗？', category: 'matching' },
+    { text: '有什么针对卫星互联网的补贴？', category: 'policy' },
+    { text: '想预约 Dr. Lin 的专家咨询', category: 'experts' },
   ];
 
   // Scroll to bottom on new messages
@@ -69,7 +69,7 @@ export default function AiAssistant({ userProfile, onNavigateToTab }: AiAssistan
       });
 
       if (!response.ok) {
-        throw new Error('API request failed');
+         throw new Error('API request failed');
       }
 
       const data = await response.json();
@@ -97,35 +97,39 @@ export default function AiAssistant({ userProfile, onNavigateToTab }: AiAssistan
   };
 
   return (
-    <div className="w-[360px] border-l border-[#1a1a24] bg-[#09090d] flex flex-col h-full shrink-0" id="ai-assistant-panel">
-      {/* Header matching lovable.dev style */}
-      <div className="p-4 border-b border-[#14141d] flex items-center gap-3" id="ai-assistant-header">
-        <div className="bg-violet-600/20 border border-violet-500/30 text-violet-400 p-2.5 rounded-xl shadow-md flex items-center justify-center">
-          <Bot className="w-5 h-5 text-violet-400 animate-pulse" />
+    <aside className="w-[308px] border-l border-[#ffffff0b] bg-bg-panel flex flex-col h-full shrink-0 overflow-hidden" id="ai-assistant-panel">
+      {/* Header matching mockup style */}
+      <div className="p-4 border-b border-[#ffffff07] flex items-center justify-between shrink-0" id="ai-assistant-header">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#4f46e5] flex items-center justify-center text-base shrink-0">
+            🤖
+          </div>
+          <div className="min-w-0 text-left">
+            <h2 className="text-[13px] font-bold text-white flex items-center gap-1.5 font-sans leading-none">
+              企业智能助手
+            </h2>
+            <p className="text-[10.5px] text-slate-500 mt-1 leading-none truncate">
+              Lovable v4-flash 高速应答引擎
+            </p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-1.5 font-sans">
-            企业智能助手
-            <span className="inline-block px-1.5 py-0.5 rounded-full text-[9px] font-mono font-medium tracking-tight bg-violet-500/10 text-violet-400 border border-violet-500/20 animate-pulse">
-              Active
-            </span>
-          </h2>
-          <p className="text-xs text-slate-400">
-            Lovable v4-flash 高速应答引擎
-          </p>
+        
+        <div className="flex items-center gap-1 bg-[#10b981]/10 border border-[#10b981]/20 rounded-full px-2 py-0.5 text-[10px] font-bold text-[#34d399] select-none">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />
+          <span>Active</span>
         </div>
       </div>
 
       {/* Messages Stack */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#050508]/80" id="ai-messages-container">
+      <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5 bg-bg-base/80" id="ai-messages-container">
         {messages.length === 1 && (
-          <div className="text-center py-8 px-4" id="ai-assistant-welcome">
-            <div className="inline-flex p-4 rounded-full bg-violet-600/5 border border-violet-500/10 text-violet-400 mb-3 animate-bounce">
-              <MessageSquare className="w-8 h-8" />
+          <div className="text-center py-6 px-2.5" id="ai-assistant-welcome">
+            <div className="w-[44px] h-[44px] bg-violet-500/10 border border-violet-500/20 rounded-xl mx-auto mb-2.5 flex items-center justify-center text-[22px]">
+              🤖
             </div>
-            <p className="text-sm font-semibold text-slate-300">智能助理已连接，随时提问</p>
-            <p className="text-xs text-slate-500 mt-1.5 max-w-[220px] mx-auto">
-              您可以输入任意关于项目行业合规评定、高新技术申报等专业疑问。
+            <p className="text-[13px] font-bold text-slate-200">智能助理已连接，随时提问</p>
+            <p className="text-[11px] text-slate-500 mt-1 max-w-[210px] mx-auto leading-relaxed">
+              您可以输入任意关于项目申报、行业合规、高新技术申报等专业疑问。
             </p>
           </div>
         )}
@@ -135,44 +139,29 @@ export default function AiAssistant({ userProfile, onNavigateToTab }: AiAssistan
           return (
             <div
               key={msg.id}
-              className={`flex gap-2.5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+              className={`flex flex-col max-w-[90%] ${isUser ? 'self-end ml-auto' : 'self-start'}`}
               id={`chat-msg-${msg.id}`}
             >
-              {/* Avatar Indicator */}
-              <div className={`p-1.5 rounded-lg shrink-0 flex items-center justify-center h-8 w-8 ${
-                isUser ? 'bg-violet-600 text-white shadow-md' : 'bg-[#12121a] text-slate-300 border border-[#1e1e2d]'
-               }`}
-              >
-                {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-              </div>
-
               {/* Message Content Bubble */}
-              <div className="max-w-[80%] flex flex-col">
-                <div className={`px-4 py-2.5 rounded-2xl text-xs leading-relaxed space-y-1 ${
-                  isUser
-                    ? 'bg-violet-600 text-white rounded-tr-none shadow-sm'
-                    : 'bg-[#12121a] text-slate-200 border border-[#1e1e2d] rounded-tl-none shadow-xs'
-                }`}>
-                  <p className="whitespace-pre-wrap font-sans">{msg.text}</p>
-                </div>
-                <span className={`text-[9px] text-slate-500 mt-1 font-mono ${isUser ? 'text-right' : 'text-left'}`}>
-                  {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
+              <div className={`px-3 py-2.5 rounded-xl text-[12px] leading-[1.7] ${
+                isUser
+                  ? 'bg-violet-600 text-white rounded-tr-none shadow-sm text-left'
+                  : 'bg-bg-card2 border border-white/[0.04] text-slate-200 rounded-tl-none shadow-xs text-left'
+              }`}>
+                <p className="whitespace-pre-wrap font-sans">{msg.text}</p>
               </div>
+              <span className={`text-[9px] text-slate-500 mt-1 px-1 font-mono ${isUser ? 'text-right' : 'text-left'}`}>
+                {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
           );
         })}
 
         {loading && (
-          <div className="flex gap-2.5" id="ai-typing">
-            <div className="p-1.5 rounded-lg shrink-0 flex items-center justify-center bg-[#12121a] text-slate-300 border border-[#1e1e2d] h-8 w-8">
-              <Bot className="w-4 h-4 text-violet-400 animate-spin" />
-            </div>
-            <div className="max-w-[80%]">
-              <div className="px-3.5 py-2.5 rounded-2xl bg-[#12121a] border border-[#1e1e2d] rounded-tl-none shadow-xs text-xs flex items-center gap-1.5 text-slate-400">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-violet-500" />
-                <span>智能模型正在高速运算中...</span>
-              </div>
+          <div className="flex flex-col max-w-[90%] self-start" id="ai-typing">
+            <div className="px-3 py-2.5 rounded-xl bg-[#12121a] border border-[#1e1e2d] rounded-tl-none shadow-xs text-[11px] flex items-center gap-1.5 text-slate-400">
+              <Loader2 className="w-3 animate-spin text-violet-550" />
+              <span>智服合规核心正在处理中...</span>
             </div>
           </div>
         )}
@@ -180,69 +169,60 @@ export default function AiAssistant({ userProfile, onNavigateToTab }: AiAssistan
       </div>
 
       {/* Quick Access Prompts */}
-      <div className="p-3 border-t border-[#14141d] bg-[#09090d]" id="ai-quick-prompts">
-        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2 px-1">
-          快捷咨询提问
+      <div className="p-3 border-t border-[#ffffff07] bg-bg-panel shrink-0 text-left" id="ai-quick-prompts">
+        <p className="text-[10px] text-slate-500 mb-2.5 px-0.5">
+          快捷咨询问题
         </p>
-        <div className="flex gap-1.5 flex-wrap">
+        <div className="flex flex-col gap-1.5">
           {quickPrompts.map((p, idx) => (
             <button
               key={idx}
               id={`quick-prompt-${idx}`}
               onClick={() => handleSendMessage(p.text)}
-              className="text-[10px] bg-[#12121a] hover:bg-[#1C1C26] border border-[#1e1e2d] hover:border-violet-500/20 text-slate-300 font-semibold px-2.5 py-1.5 rounded-full transition-all cursor-pointer inline-flex items-center gap-1 shrink-0"
+              className="text-[11.5px] bg-[#19192a] hover:bg-bg-hover text-slate-300 px-3 py-2 border border-[#ffffff07] rounded-lg transition-all cursor-pointer text-left flex items-center gap-2 pr-2"
             >
-              <Sparkles className="w-2.5 h-2.5 text-violet-400 animate-pulse" />
-              {p.text}
+              <span className="text-slate-500 select-none text-[12px]">
+                {idx === 0 ? '🏆' : idx === 1 ? '🔗' : idx === 2 ? '🛰️' : '👤'}
+              </span>
+              <span className="truncate">{p.text}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Input Form matching lovable.dev style */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSendMessage(inputText);
-        }}
-        className="p-3 border-t border-[#14141d] bg-[#09090d] flex flex-col gap-2"
-        id="ai-chat-form"
-      >
-        <div className="relative">
+      {/* Input Form matching mockup style */}
+      <div className="p-3 border-t border-[#ffffff07] bg-bg-panel shrink-0" id="ai-chat-form">
+        <div className="flex items-center gap-2 bg-[#1a1a2c] border border-white/10 rounded-lg p-1.5">
           <input
             type="text"
             id="ai-chat-input-field"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSendMessage(inputText);
+              }
+            }}
             placeholder="输入企业数据、合规、政策申报疑问..."
-            className="w-full text-xs font-sans bg-[#12121a] border border-[#1e1e2d] hover:border-[#242435] focus:border-violet-500 focus:bg-[#12121a] text-white rounded-lg pl-3 pr-10 py-2.5 outline-none transition-all"
+            className="flex-1 text-[11.5px] font-sans bg-transparent text-white px-2 outline-none"
             disabled={loading}
           />
           <button
-            type="submit"
+            type="button"
             id="ai-submit-message"
+            onClick={() => handleSendMessage(inputText)}
             disabled={!inputText.trim() || loading}
-            className={`absolute right-1.5 top-1/2 -translate-y-1/2 p-2 rounded-md transition-colors ${
+            className={`px-3 py-1.5 rounded-md text-[11.5px] font-semibold font-sans transition-colors shrink-0 ${
               inputText.trim() && !loading
-                ? 'text-violet-400 hover:bg-[#a78bfa]/10'
-                : 'text-slate-600 pointer-events-none'
+                ? 'bg-violet-600 text-white cursor-pointer hover:bg-violet-500'
+                : 'bg-violet-800 text-white/50 cursor-not-allowed'
             }`}
           >
-            <Send className="w-3.5 h-3.5" />
+            发送
           </button>
         </div>
-        
-        <button
-          type="button"
-          id="ai-big-chat-button"
-          onClick={() => handleSendMessage("根据当前的企业数据，全方位评估我的政策匹配度与合规得分！")}
-          className="w-full text-xs text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 p-2.5 rounded-lg flex items-center justify-center gap-1.5 font-bold shadow-md shadow-violet-600/10 cursor-pointer transition-all focus:ring-2 focus:ring-violet-550"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-yellow-300 animate-pulse" />
-          <span>开始智能合规评估</span>
-          <ArrowRight className="w-3.5 h-3.5 text-yellow-200" />
-        </button>
-      </form>
-    </div>
+      </div>
+    </aside>
   );
 }

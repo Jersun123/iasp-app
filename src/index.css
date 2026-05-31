@@ -1,22 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;450;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Mockup theme color overrides */
+  --color-bg-base: #0f0f1a;
+  --color-bg-panel: #13131e;
+  --color-bg-card: #19192a;
+  --color-bg-card2: #1e1e2f;
+  --color-bg-hover: #24243a;
+  --color-bg-input: #1a1a2c;
+  --size-sidebar-width: 188px;
+  --size-assistant-width: 308px;
 }
 
 body {
-  background-color: #030303;
-  color: #f1f5f9;
+  background-color: #0f0f1a;
+  color: #e8eaf0;
 }
 
 /* Custom gorgeous neon/glow effects reminiscent of lovable.dev */
 .lovable-glow-card {
   position: relative;
-  background: #0d0d12;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 1rem;
+  background: #19192a;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
@@ -25,9 +35,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 1rem;
+  border-radius: 12px;
   padding: 1px;
-  background: linear-gradient(to bottom right, rgba(139, 92, 246, 0.25), rgba(99, 102, 241, 0), rgba(217, 70, 239, 0.15));
+  background: linear-gradient(to bottom right, rgba(124, 58, 237, 0.25), rgba(99, 102, 241, 0), rgba(236, 72, 153, 0.15));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -36,8 +46,8 @@ body {
 
 .lovable-glow-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(139, 92, 246, 0.35);
-  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.15);
+  border-color: rgba(124, 58, 237, 0.35);
+  box-shadow: 0 12px 30px -10px rgba(124, 58, 237, 0.22);
 }
 
 /* Custom micro scrollbar for tech feel */
