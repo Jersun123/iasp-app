@@ -1,0 +1,6 @@
+{
+  "name": "智服平台",
+  "description": "智服平台是一个专为高新技术与互联网产业定制的智能聚合核心公共服务平台，提供在线企业合规风险自检、大宗供需资源撮合、珠海横琴本地政企政策精准测算，并全天候内嵌了Gemini决策咨询常驻助手。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
