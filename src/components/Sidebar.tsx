@@ -48,7 +48,7 @@ export default function Sidebar({ activeTab, setActiveTab, userProfile }: Sideba
             <Sparkles className="w-5 h-5 text-violet-400 animate-pulse" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-violet-300 via-indigo-200 to-white bg-clip-text text-transparent font-sans">
-            智服平台
+            智慧服务平台
           </h1>
         </div>
         <p className="text-[10px] text-slate-400 font-medium tracking-wider">
