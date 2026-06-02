@@ -21,6 +21,7 @@ import {
   Globe
 } from 'lucide-react';
 import { ActiveTab } from '../types';
+import RegistrationModule from './RegistrationModule';
 
 interface DashboardProps {
   setActiveTab: (tab: ActiveTab) => void;
@@ -578,6 +579,12 @@ export default function Dashboard({ setActiveTab, onBookExpert, onClaimTicket }:
           </div>
 
         </div>
+
+        {/* 6. Secure Onboarding Register Module (Full Grid Width) */}
+        <div className="lg:col-span-12" id="dashboard-registration-module-wrapper">
+          <RegistrationModule onNotify={(msg) => alert(msg)} />
+        </div>
+
       </div>
     </div>
   );

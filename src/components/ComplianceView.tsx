@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, AlertTriangle, CheckCircle, Search, HelpCircle, FileText, ChevronRight, Play, CheckSquare } from 'lucide-react';
+import RegistrationModule from './RegistrationModule';
 
 export default function ComplianceView() {
-  const [activeSegment, setActiveSegment] = useState<'scan' | 'checklist'>('scan');
+  const [activeSegment, setActiveSegment] = useState<'scan' | 'checklist' | 'registration'>('scan');
   const [running, setRunning] = useState(false);
   const [log, setLog] = useState<string[]>([]);
   const [checkedAnswers, setCheckedAnswers] = useState<Record<string, boolean>>({
@@ -78,9 +79,17 @@ export default function ComplianceView() {
         >
           合规要项排查清单
         </button>
+        <button
+          onClick={() => setActiveSegment('registration')}
+          className={`pb-3 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            activeSegment === 'registration' ? 'border-b-2 border-violet-500 text-white font-semibold' : 'text-slate-500 hover:text-slate-350'
+          }`}
+        >
+          单位注册 / 专家邀请注册
+        </button>
       </div>
 
-      {activeSegment === 'scan' ? (
+      {activeSegment === 'scan' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8" id="compliance-scan-content">
           {/* Main scanning triggers */}
           <div className="lg:col-span-8 p-6 shadow-sm space-y-6 lovable-glow-card relative">
@@ -112,12 +121,12 @@ export default function ComplianceView() {
             {/* Simulated Live Logging screen */}
             {(log.length > 0 || running) && (
               <div className="bg-[#0b0c16] text-slate-200 font-mono text-[11px] p-4 rounded-xl space-y-2 overflow-hidden border border-violet-500/20 shadow-inner">
-                <p className="text-slate-500 border-b border-[#1e1e2d] pb-2 mb-2 flex items-center justify-between">
+                <p className="text-slate-500 border-b border-[#1e1e2d] pb-2 mb-2 flex items-center justify-between font-sans">
                   <span>LOGGING ENGINE ACTIVE - SHIELD PROTOCOL V1.2.9</span>
                   <span className="animate-pulse text-violet-400 block h-2 w-2 rounded-full bg-violet-400" />
                 </p>
                 {log.map((item, index) => (
-                  <p key={index} className="transition-all leading-normal">
+                  <p key={index} className="transition-all leading-normal text-left">
                     <span className="text-violet-400 mr-2">&gt;</span>
                     {item}
                   </p>
@@ -160,9 +169,11 @@ export default function ComplianceView() {
 
           </div>
         </div>
-      ) : (
+      )}
+
+      {activeSegment === 'checklist' && (
         <div className="p-6 shadow-sm space-y-6 lovable-glow-card" id="compliance-checklist-content">
-          <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#1e1e2d] gap-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#1e1e2d] gap-4 text-left">
             <div>
               <h3 className="text-base font-bold text-white font-sans">合规核查要项对照清单</h3>
               <p className="text-xs text-slate-400 mt-1">自主勾选以下各项，完成度将直接影响您的 AI 评估分值。</p>
@@ -179,18 +190,18 @@ export default function ComplianceView() {
               { key: 'a2', label: '制定并向员工签署了清晰的信息安全守则及数据物理安全存储协议。', desc: '防范内部及离职员工敏感数据无意识外溢。' },
               { key: 'a3', label: '完成了 APP 及官方网页的隐私条款制定并在显著页面展示。', desc: '中国信通院和属地网信办合规重点抽样检查项目。' },
               { key: 'a4', label: '为对外开展跨境商务的数据交互准备了合法主体协议框架。', desc: '防范因未申请个人数据出境自检而造成的涉外合规隐患。' },
-              { key: 'a5', label: '定期对服务器物理硬盘和云硬盘进行了标准加密隔离。', desc: '避免由于突发漏洞爆破导致的泄露风险。' },
+              { key: 'a5', label: '定期对服务器物理硬盘 and 云硬盘进行了标准加密隔离。', desc: '避免由于突发漏洞爆破导致的泄露风险。' },
             ].map((item) => (
               <label
                 key={item.key}
                 id={`checklist-lbl-${item.key}`}
-                className="flex items-start gap-3 p-3.5 hover:bg-[#12121a]/30 border border-[#1e1e2d] rounded-xl cursor-pointer transition-all block"
+                className="flex items-start gap-3 p-3.5 hover:bg-[#12121a]/30 border border-[#1e1e2d] rounded-xl cursor-pointer transition-all block text-left"
               >
                 <input
                   type="checkbox"
                   checked={checkedAnswers[item.key]}
                   onChange={() => handleCheckboxChange(item.key)}
-                  className="mt-1 accent-violet-600 cursor-pointer w-4 h-4"
+                  className="mt-1 accent-violet-600 cursor-pointer w-4 h-4 animate-none"
                 />
                 <div>
                   <span className="text-xs font-bold text-slate-200">{item.label}</span>
@@ -200,16 +211,22 @@ export default function ComplianceView() {
             ))}
           </div>
 
-          <button
-            onClick={() => {
-              const allCheckedCount = Object.values(checkedAnswers).filter(Boolean).length;
-              alert(`您目前完成了：${allCheckedCount} / 5 项自查。智能合规专家已将该结果自动同步您的概览大盘系统。`);
-            }}
-            className="text-xs text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 font-bold px-5 py-2.5 rounded-xl cursor-pointer transition-all shadow-md shadow-violet-600/10"
-          >
-            同步自查统计结果
-          </button>
+          <div className="flex justify-start">
+            <button
+              onClick={() => {
+                const allCheckedCount = Object.values(checkedAnswers).filter(Boolean).length;
+                alert(`您目前完成了：${allCheckedCount} / 5 项自查。智能合规专家已将该结果自动同步您的概览大盘系统。`);
+              }}
+              className="text-xs text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 font-bold px-5 py-2.5 rounded-xl cursor-pointer transition-all shadow-md shadow-violet-600/10"
+            >
+              同步自查统计结果
+            </button>
+          </div>
         </div>
+      )}
+
+      {activeSegment === 'registration' && (
+        <RegistrationModule onNotify={(msg) => alert(msg)} />
       )}
     </div>
   );
